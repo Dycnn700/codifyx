@@ -440,8 +440,39 @@
         </div>
     </div>
 
+    <!-- سكربت Firebase المتكامل -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlTDK0HDzshrJO4_PLMGtlVmsGWGfFXPY",
+            authDomain: "codifyx-b1102.firebaseapp.com",
+            projectId: "codifyx-b1102",
+            storageBucket: "codifyx-b1102.firebasestorage.app",
+            messagingSenderId: "1060825103728",
+            appId: "1:1060825103728:web:d9c95399fdcd865082a3b5"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // ربط دالة إرسال الطلبات لفايربيس بالنافذة العامة لتعمل مع زر التسجيل
+        window.sendOrderToFirebase = async function(orderData) {
+            try {
+                await addDoc(collection(db, "codifyx_orders"), {
+                    ...orderData,
+                    createdAt: new Date()
+                });
+                alert("تم إرسال طلبك بنجاح إلى قاعدة البيانات!");
+            } catch (e) {
+                console.error(e);
+                alert("حدث خطأ في الإرسال لقاعدة البيانات");
+            }
+        };
+    </script>
+
     <script>
-        // تحميل البيانات من localStorage أو إنشاء قيم افتراضية
         let usersDB = JSON.parse(localStorage.getItem('codifyx_usersDB')) || [];
         let pendingRequests = JSON.parse(localStorage.getItem('codifyx_pendingRequests')) || [];
         let adminMessages = JSON.parse(localStorage.getItem('codifyx_adminMessages')) || [];
@@ -454,10 +485,8 @@
         let selectedMemberForControl = null;
         let activeChatTargetUser = null;
 
-        // التحقق عند فتح الصفحة إذا كان المستخدم مسجلاً مسبقاً
         window.onload = function() {
             if (currentUser) {
-                // مزامنة بيانات المستخدم الحالي مع الـ usersDB
                 let updated = usersDB.find(u => u.tenDigits === currentUser.tenDigits);
                 if (updated) {
                     currentUser = updated;
@@ -509,7 +538,6 @@
             currentUser.avatar = url;
             document.getElementById('user-avatar-display').src = url;
             
-            // تحديثه في الـ usersDB أيضاً
             let userInDb = usersDB.find(u => u.tenDigits === currentUser.tenDigits);
             if (userInDb) userInDb.avatar = url;
 
@@ -812,16 +840,22 @@
 
             if (!name || !pass) { alert("الرجاء إدخال الاسم وكلمة المرور!"); return; }
 
-            pendingRequests.push({
+            let requestData = {
                 id: Date.now(),
                 name: name,
                 pass: pass,
                 type: type,
                 promoter: promoter || "لا يوجد"
-            });
+            };
 
+            pendingRequests.push(requestData);
             saveData();
-            alert("تم رفع طلبك بنجاح! بانتظار مراجعة المسؤول.");
+
+            // إرسال البيانات المباشرة إلى Firebase Firestore
+            if (window.sendOrderToFirebase) {
+                window.sendOrderToFirebase(requestData);
+            }
+
             document.getElementById('reg-name').value = "";
             document.getElementById('reg-pass').value = "";
             document.getElementById('reg-promoter').value = "";
