@@ -3,1019 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodifyX - المنصة التقنية</title>
+    <title>منصة CodifyX</title>
     <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
+            --accent-color: #00ffcc;
+            --text-color: #ffffff;
+            --text-muted: #94a3b8;
+        }
         body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0b0f19;
-            color: #ffffff;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            flex-direction: column;
-            text-align: center;
-            padding: 20px;
         }
-        
-        .page {
-            display: none;
-            width: 100%;
-            max-width: 350px;
+        .container {
+            max-width: 600px;
+            width: 90%;
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        p.subtitle {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+        .btn-group {
+            display: flex;
             flex-direction: column;
-            align-items: center;
             gap: 15px;
         }
-
-        .page.active {
-            display: flex;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 5px;
-            font-weight: bold;
-            background: linear-gradient(90deg, #00ffcc 0%, #ffffff 50%, #00ffcc 100%);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            text-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
-        }
-
-        .subtitle {
-            color: #8b949e;
-            font-size: 1rem;
-            margin-bottom: 10px;
-        }
-
         .btn {
-            background-color: #161b22;
-            color: #00ffcc;
-            border: 2px solid #00ffcc;
-            padding: 12px 20px;
-            font-size: 1rem;
+            background: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            padding: 14px 20px;
+            border-radius: 10px;
             font-weight: bold;
-            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
-            width: 100%;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
-
         .btn:hover {
-            background-color: #00ffcc;
-            color: #0b0f19;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
         }
-
-        .btn-primary {
-            background-color: #00ffcc;
-            color: #0b0f19;
-            border: none;
-        }
-
-        .btn-admin {
-            background-color: #1f1616;
-            color: #ff5555;
-            border: 2px solid #ff5555;
-        }
-
-        .input-field, select.input-field, textarea.input-field {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #30363d;
-            background-color: #161b22;
-            color: #ffffff;
-            font-size: 1rem;
-            text-align: center;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .icon-btn {
-            background: none;
-            border: none;
-            color: #00ffcc;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .search-box {
-            flex-grow: 1;
-            margin: 0 10px;
-            padding: 8px 12px;
-            border-radius: 20px;
-            border: 1px solid #30363d;
-            background-color: #161b22;
-            color: #ffffff;
-            font-size: 0.9rem;
-            text-align: right;
-            box-sizing: border-box;
-        }
-
-        .no-chat-container {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 250px;
-            color: #8b949e;
-            font-size: 1.3rem;
-            font-weight: bold;
-            gap: 10px;
-        }
-
-        #side-menu {
+        .content-box {
             display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            justify-content: flex-start;
-            z-index: 999;
-        }
-
-        .side-menu-content {
-            background-color: #161b22;
-            border-left: 2px solid #00ffcc;
-            width: 70%;
-            max-width: 250px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+            margin-top: 25px;
             padding: 20px;
-            box-sizing: border-box;
-            gap: 10px;
+            background: #0b0f19;
+            border-radius: 12px;
             text-align: right;
-            overflow-y: auto;
+            border-right: 4px solid var(--accent-color);
+            color: #e2e8f0;
+            line-height: 1.6;
         }
-
-        .side-menu-btn {
-            background-color: #0b0f19;
-            color: #00ffcc;
-            border: 1px solid #00ffcc;
-            padding: 10px;
+        .content-box h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+        }
+        .back-btn {
+            background: #1e293b;
+            color: var(--text-muted);
+            border: none;
+            padding: 8px 15px;
             border-radius: 6px;
+            margin-top: 15px;
             cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-align: right;
+            font-size: 14px;
         }
-
-        .side-menu-btn:hover {
-            background-color: #00ffcc;
-            color: #0b0f19;
-        }
-
-        .admin-section-box {
-            background-color: #161b22;
-            border: 2px solid #ff5555;
-            padding: 15px;
-            border-radius: 12px;
-            width: 100%;
-            box-sizing: border-box;
-            text-align: right;
-            display: none;
-        }
-
-        .admin-section-box.active-section {
-            display: block;
-        }
-
-        .request-card {
-            background-color: #0b0f19;
-            padding: 10px;
-            margin-bottom: 8px;
-            border-radius: 6px;
-            border: 1px solid #ff5555;
-            font-size: 0.85rem;
-            text-align: right;
-        }
-
-        .custom-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background-color: #161b22;
-            border: 2px solid #00ffcc;
-            padding: 25px;
-            border-radius: 12px;
-            width: 85%;
-            max-width: 310px;
-            text-align: center;
+        .back-btn:hover {
+            background: #334155;
+            color: #fff;
         }
     </style>
 </head>
 <body>
 
-    <div id="welcome-page" class="page active">
+    <div class="container">
         <h1>CodifyX</h1>
-        <p class="subtitle">تميز معنا وكن نفسك.</p>
-        <button class="btn btn-primary" onclick="switchPage('options-page')">دخول الموقع</button>
-    </div>
+        <p class="subtitle">منصتك المبتكرة للحلول والخدمات البرمجية والإنجازية</p>
 
-    <div id="options-page" class="page">
-        <h1>CodifyX</h1>
-        <p class="subtitle">اختر وجهتك التقنية:</p>
-        <button class="btn" onclick="openAboutModal()">لمحة عنا</button>
-        <button class="btn" onclick="switchPage('register-page')">انضم إلينا (تسجيل طلب)</button>
-        <button class="btn" onclick="switchPage('login-page')">تسجيل الدخول (بالكود والرصيد)</button>
-        <button class="btn btn-admin" onclick="showAdminModal()">🔐 لوحة المدير</button>
-        <button class="btn" onclick="switchPage('welcome-page')">الرجوع للبداية</button>
-    </div>
-
-    <div id="register-page" class="page">
-        <h1>طلب انضمام</h1>
-        <p class="subtitle">أدخل بياناتك لرفع الطلب:</p>
-        <input type="text" id="reg-name" class="input-field" placeholder="اسمك الكريم...">
-        <input type="password" id="reg-pass" class="input-field" placeholder="كلمة مرور حسابك...">
-        <select id="reg-type" class="input-field">
-            <option value="مبتدئ">مبتدئ</option>
-            <option value="مبرمج">مبرمج</option>
-        </select>
-        <input type="text" id="reg-promoter" class="input-field" placeholder="كود المروج (اختياري)...">
-        <button class="btn btn-primary" onclick="submitRequest()">رفع الطلب للمسؤول</button>
-        <button class="btn" onclick="switchPage('options-page')">الرجوع</button>
-    </div>
-
-    <div id="login-page" class="page">
-        <h1>تسجيل الرصيد</h1>
-        <p class="subtitle">أدخل كودك الخاص وكلمة المرور:</p>
-        <input type="text" id="login-code" class="input-field" placeholder="الكود الخاص بك...">
-        <input type="password" id="login-pass" class="input-field" placeholder="كلمة المرور...">
-        <button class="btn btn-primary" onclick="loginWithBalance()">دخول للحساب</button>
-        <button class="btn" onclick="switchPage('options-page')">الرجوع</button>
-    </div>
-
-    <div id="dashboard-page" class="page" style="justify-content: flex-start; height: 90vh;">
-        <div class="dashboard-header">
-            <div style="display: flex; align-items: center; gap: 4px; cursor: pointer;" onclick="openFriendsModal()" title="الأصدقاء والمحادثات">
-                <img id="user-avatar-display" src="https://via.placeholder.com/35" style="width: 32px; height: 32px; border-radius: 50%; border: 1px solid #00ffcc; object-fit: cover;" alt="صورة الحساب">
-                <span style="font-size: 0.75rem; color: #00ffcc; font-weight: bold;">الأصدقاء</span>
-            </div>
-            
-            <input type="text" id="global-search-input" class="search-box" placeholder="🔍 بحث برقم الـ 10 أرقام..." onkeypress="handleSearchKey(event)">
-            
-            <button class="icon-btn" onclick="openSideMenu()" title="القائمة">☰</button>
+        <div class="btn-group" id="mainMenu">
+            <button class="btn" onclick="showSection('aboutSection')">من نحن وأعمالنا</button>
+            <a href="mailto:Codifyx530@gmail.com?subject=استفسار أو طلب من منصة CodifyX" class="btn">تواصل معنا</a>
         </div>
 
-        <div id="user-channels-feed" style="width: 100%; text-align: right; margin-bottom: 4px; display: flex; flex-direction: column; gap: 6px; max-height: 140px; overflow-y: auto;"></div>
-
-        <div id="active-chat-box" style="width: 100%; flex-grow: 1; display: none; flex-direction: column; background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; overflow: hidden; margin-bottom: 5px;">
-            <div id="active-chat-header" style="background-color: #0b0f19; padding: 8px; border-bottom: 1px solid #30363d; font-size: 0.85rem; color: #00ffcc; font-weight: bold; text-align: right;"></div>
-            <div id="active-chat-messages" style="flex-grow: 1; padding: 8px; overflow-y: auto; text-align: right; display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; max-height: 180px;"></div>
-            <div style="display: flex; padding: 6px; background-color: #0b0f19; border-top: 1px solid #30363d; gap: 4px;">
-                <input type="text" id="chat-msg-input" class="input-field" placeholder="اكتب رسالة..." style="padding: 6px; font-size: 0.8rem; margin: 0;" onkeypress="handleChatKey(event)">
-                <button class="btn btn-primary" onclick="sendDirectMessage()" style="width: 50px; padding: 6px; font-size: 0.8rem;">إرسال</button>
-            </div>
-        </div>
-
-        <div id="no-chat-container" class="no-chat-container">
-            <div style="font-size: 3rem;">💬</div>
-            <div>لا يوجد محادثة</div>
-        </div>
-    </div>
-
-    <div id="friends-modal" class="custom-modal">
-        <div class="modal-content" style="border-color: #00ffcc; max-width: 320px;">
-            <h3 style="color: #00ffcc; margin-top: 0; margin-bottom: 8px; font-size: 1rem;">قائمة الأصدقاء والمحادثات</h3>
-            <p style="font-size: 0.75rem; text-align: right; color: #8b949e; margin-bottom: 6px;">أضف صديقاً برقم هويته (10 أرقام):</p>
-            <div style="display: flex; gap: 5px; margin-bottom: 10px;">
-                <input type="text" id="add-friend-code" class="input-field" placeholder="الرقم (10 أرقام)..." style="margin: 0; padding: 6px; font-size: 0.8rem;">
-                <button class="btn btn-primary" onclick="addFriendByTenDigits()" style="width: 70px; padding: 6px; font-size: 0.8rem;">إضافة</button>
-            </div>
-            <div id="friends-list-container" style="max-height: 160px; overflow-y: auto; text-align: right; margin-bottom: 10px; display: flex; flex-direction: column; gap: 5px;"></div>
-            <button class="btn" onclick="closeFriendsModal()" style="padding: 8px; font-size: 0.85rem; border-color: #8b949e; color: #8b949e;">إغلاق</button>
-        </div>
-    </div>
-
-    <div id="side-menu" onclick="closeSideMenu(event)">
-        <div class="side-menu-content" onclick="event.stopPropagation()">
-            <h3 style="color: #00ffcc; margin-top: 0; border-bottom: 1px solid #30363d; padding-bottom: 8px; font-size: 0.95rem;">القائمة الرئيسية</h3>
-            <button class="side-menu-btn" onclick="showBalanceInfo()">💰 الرصيد</button>
-            <button class="side-menu-btn" onclick="openSettingsModal()">⚙️ إعدادات الصورة</button>
-            <button class="side-menu-btn" onclick="openCreateMyChannelModal()">🛠️ إنشاء قناة خاصة</button>
-            <button class="side-menu-btn" onclick="openManageMyChannelModal()" id="manage-my-channel-btn" style="display:none; border-color: #ffaa00; color: #ffaa00;">📢 إدارة قناتي والنشر</button>
-            <button class="side-menu-btn" onclick="openJoinChannelModal()">📥 الاشتراك بقناة بدعوة</button>
-            <button class="side-menu-btn" onclick="showAccountInfo()">👤 معلومات الحساب</button>
-            <button class="side-menu-btn" onclick="openContactAdminModal()">📞 تواصل مع المدير</button>
-            <button class="side-menu-btn" onclick="logoutUser()" style="color: #ff5555; border-color: #ff5555; margin-top: 5px;">🚪 تسجيل خروج</button>
-        </div>
-    </div>
-
-    <div id="admin-page" class="page" style="max-width: 380px;">
-        <h1 style="font-size: 1.8rem;">لوحة تحكم المدير</h1>
-        <p class="subtitle" style="color: #ff5555; margin-bottom: 15px;">اختر الخيار المناسب للإدارة:</p>
-
-        <div id="admin-main-menu" style="width: 100%; display: flex; flex-direction: column; gap: 10px;">
-            <button class="btn btn-admin" onclick="openAdminSection('requests-section')">1️⃣ الطلبات المعلقة</button>
-            <button class="btn btn-admin" onclick="openAdminSection('messages-section')">2️⃣ الرسائل الواردة</button>
-            <button class="btn btn-admin" onclick="openAdminSection('manage-user-section')">3️⃣ إدارة الأعضاء (بالكود)</button>
-            <button class="btn btn-admin" onclick="openAdminSection('create-channel-section')" style="border-color: #00ffcc; color: #00ffcc;">📢 نشر محتوى القناة الرسمية</button>
-        </div>
-
-        <div id="requests-section" class="admin-section-box">
-            <p style="color: #ff5555; margin-top: 0; font-weight: bold; text-align: center;">🔐 الطلبات المعلقة:</p>
-            <div id="requests-container" style="max-height: 200px; overflow-y: auto;"></div>
-            <button class="btn" onclick="backToAdminMenu()" style="margin-top: 10px; padding: 8px; font-size: 0.85rem; border-color: #8b949e; color: #8b949e;">⬅️ رجوع لقائمة المدير</button>
-        </div>
-
-        <div id="messages-section" class="admin-section-box">
-            <p style="color: #00ffcc; margin-top: 0; font-weight: bold; text-align: center;">📥 الرسائل الواردة:</p>
-            <div id="admin-messages-container" style="max-height: 200px; overflow-y: auto;"></div>
-            <button class="btn" onclick="backToAdminMenu()" style="margin-top: 10px; padding: 8px; font-size: 0.85rem; border-color: #8b949e; color: #8b949e;">⬅️ رجوع لقائمة المدير</button>
-        </div>
-
-        <div id="manage-user-section" class="admin-section-box" style="border-color: #00ffcc;">
-            <p style="color: #00ffcc; margin-top: 0; font-weight: bold; text-align: center;">⚙️ تحكم بعضو عبر الكود:</p>
-            <input type="text" id="search-member-code" class="input-field" placeholder="أدخل كود العضو..." style="margin-bottom: 8px; padding: 8px; font-size: 0.85rem;">
-            <button class="btn btn-primary" onclick="searchMemberByCode()" style="margin-bottom: 10px; padding: 8px; font-size: 0.85rem;">بحث عن العضو</button>
-            
-            <div id="member-control-result" style="display: none; text-align: right; border-top: 1px dashed #30363d; padding-top: 8px; font-size: 0.85rem;">
-                <p style="margin: 3px 0;">الاسم: <span id="m-name" style="color: #00ffcc;"></span></p>
-                <p style="margin: 3px 0;">الرصيد الحالي: <span id="m-balance" style="color: #ff5555;"></span></p>
-                <input type="number" id="m-new-balance" class="input-field" placeholder="الرصيد الجديد..." style="margin: 5px 0; padding: 6px; font-size: 0.8rem;">
-                <button class="btn btn-primary" onclick="updateMemberBalance()" style="margin-bottom: 5px; padding: 6px; font-size: 0.8rem;">تحديث الرصيد</button>
-                <button class="btn" onclick="deleteMemberAccount()" style="padding: 6px; font-size: 0.8rem; border-color: #ff5555; color: #ff5555;">حذف الحساب</button>
-            </div>
-
-            <button class="btn" onclick="backToAdminMenu()" style="margin-top: 10px; padding: 8px; font-size: 0.85rem; border-color: #8b949e; color: #8b949e;">⬅️ رجوع لقائمة المدير</button>
-        </div>
-
-        <div id="create-channel-section" class="admin-section-box" style="border-color: #00ffcc;">
-            <p style="color: #00ffcc; margin-top: 0; font-weight: bold; text-align: center;">📢 نشر محتوى القناة الرسمية:</p>
-            <textarea id="channel-post-input" class="input-field" rows="3" placeholder="اكتب محتوى القناة الرسمية هنا..." style="margin-bottom: 10px; resize: none; text-align: right; font-size: 0.85rem;"></textarea>
-            <button class="btn btn-primary" onclick="publishOfficialChannel()" style="margin-bottom: 8px; padding: 8px; font-size: 0.85rem;">نشر/تحديث القناة</button>
-            <button class="btn" onclick="backToAdminMenu()" style="margin-top: 5px; padding: 8px; font-size: 0.85rem; border-color: #8b949e; color: #8b949e;">⬅️ رجوع لقائمة المدير</button>
-        </div>
-
-        <button class="btn" onclick="switchPage('options-page')" style="margin-top: 10px; padding: 10px; border-color: #8b949e; color: #8b949e;">العودة للقائمة الرئيسية</button>
-    </div>
-
-    <div id="about-modal" class="custom-modal">
-        <div class="modal-content">
-            <h3 style="color: #00ffcc; margin-top: 0; margin-bottom: 10px;">لمحة عن CodifyX</h3>
-            <p style="font-size: 0.85rem; line-height: 1.6; text-align: right; color: #ffffff; margin-bottom: 15px;">
-                <strong>💡 فكرة العمل:</strong><br>
-                منصة تقنية متكاملة تهدف لربط المطورين والمبدعين وكسر حاجز المسافات من خلال بيئة تواصل سريعة وآمنة تعتمد على الأرقام التعريفية الفريدة لكل مستخدم.<br><br>
-                <strong>🚀 آفاق العمل معنا:</strong><br>
-                عندما تبدأ بتعلم البرمجة وتطوير مهاراتك داخل منصتنا، لن يقتصر الأمر على الاستخدام العادي؛ بل ستنفتح لك خيارات و مسارات عمل احترافية أخرى (مثل المشاركة في تطوير النظام، إدارة المشاريع التقنية، وفتح آفاق شراكة وتوظيف معنا ومع مجتمع المبرمجين)!
-            </p>
-            <button class="btn btn-primary" onclick="closeAboutModal()" style="padding: 8px; font-size: 0.9rem;">حسناً، فهمت</button>
-        </div>
-    </div>
-
-    <div id="settings-modal" class="custom-modal">
-        <div class="modal-content">
-            <h3 style="color: #00ffcc; margin-top: 0; margin-bottom: 10px;">إعدادات الحساب</h3>
-            <p style="font-size: 0.85rem; text-align: right; color: #8b949e; margin-bottom: 8px;">تغيير صورة الحساب الشخصية:</p>
-            <input type="text" id="new-avatar-url" class="input-field" placeholder="أدخل رابط الصورة الجديدة هنا..." style="margin-bottom: 15px; font-size: 0.85rem; padding: 8px;">
-            <button class="btn btn-primary" onclick="updateUserAvatar()" style="margin-bottom: 8px; padding: 8px; font-size: 0.9rem;">حفظ الصورة</button>
-            <button class="btn" onclick="closeSettingsModal()" style="padding: 8px; font-size: 0.9rem; border-color: #8b949e; color: #8b949e;">إلغاء</button>
-        </div>
-    </div>
-
-    <div id="create-my-channel-modal" class="custom-modal">
-        <div class="modal-content" style="border-color: #ffaa00;">
-            <h3 style="color: #ffaa00; margin-top: 0; margin-bottom: 10px;">إنشاء قناتك الخاصة</h3>
-            <input type="text" id="my-chan-name" class="input-field" placeholder="اسم القناة..." style="margin-bottom: 8px; font-size: 0.85rem; padding: 8px;">
-            <input type="text" id="my-chan-code" class="input-field" placeholder="كود الدعوة للقناة (مثال: MYCHAN123)..." style="margin-bottom: 15px; font-size: 0.85rem; padding: 8px;">
-            <button class="btn btn-primary" onclick="saveMyNewChannel()" style="margin-bottom: 8px; padding: 8px; font-size: 0.9rem; background-color: #ffaa00; color: #0b0f19;">إنشاء القناة</button>
-            <button class="btn" onclick="closeCreateMyChannelModal()" style="padding: 8px; font-size: 0.9rem; border-color: #8b949e; color: #8b949e;">إلغاء</button>
-        </div>
-    </div>
-
-    <div id="manage-my-channel-modal" class="custom-modal">
-        <div class="modal-content" style="border-color: #ffaa00;">
-            <h3 style="color: #ffaa00; margin-top: 0; margin-bottom: 10px;" id="manage-chan-title-label">إدارة قناتي</h3>
-            <p style="font-size: 0.75rem; color: #8b949e; text-align: right; margin-bottom: 5px;">كود دعوة قناتك للأصدقاء: <span id="manage-chan-code-label" style="color: #00ffcc; font-weight: bold;"></span></p>
-            <textarea id="manage-chan-post-input" class="input-field" rows="3" placeholder="اكتب محتوى جديد لنشره في قناتك..." style="margin-bottom: 10px; resize: none; text-align: right; font-size: 0.85rem;"></textarea>
-            <button class="btn btn-primary" onclick="publishMyChannelPost()" style="margin-bottom: 8px; padding: 8px; font-size: 0.9rem; background-color: #ffaa00; color: #0b0f19;">نشر في القناة</button>
-            <button class="btn" onclick="closeManageMyChannelModal()" style="padding: 8px; font-size: 0.9rem; border-color: #8b949e; color: #8b949e;">إغلاق</button>
-        </div>
-    </div>
-
-    <div id="join-channel-modal" class="custom-modal">
-        <div class="modal-content">
-            <h3 style="color: #00ffcc; margin-top: 0; margin-bottom: 10px;">الاشتراك بقناة بدعوة</h3>
-            <p style="font-size: 0.85rem; text-align: right; color: #8b949e; margin-bottom: 8px;">أدخل كود أو رابط دعوة القناة:</p>
-            <input type="text" id="channel-invite-code" class="input-field" placeholder="مثال: CODIFYX2026..." style="margin-bottom: 15px; font-size: 0.85rem; padding: 8px;">
-            <button class="btn btn-primary" onclick="joinChannelByInvite()" style="margin-bottom: 8px; padding: 8px; font-size: 0.9rem;">الانضمام وعرض المحتوى</button>
-            <button class="btn" onclick="closeJoinChannelModal()" style="padding: 8px; font-size: 0.9rem; border-color: #8b949e; color: #8b949e;">إلغاء</button>
-        </div>
-    </div>
-
-    <div id="admin-modal" class="custom-modal">
-        <div class="modal-content" style="border-color: #ff5555;">
-            <p style="color: #ff5555; font-weight: bold; margin-bottom: 10px;">أدخل كلمة سر المدير:</p>
-            <input type="password" id="admin-password-input" class="input-field" placeholder="كلمة السر..." style="margin-bottom: 15px;">
-            <button class="btn btn-primary" onclick="verifyAdminPassword()" style="margin-bottom: 8px; padding: 10px;">دخول</button>
-            <button class="btn" onclick="closeAdminModal()" style="padding: 10px; border-color: #8b949e; color: #8b949e;">إلغاء</button>
-        </div>
-    </div>
-
-    <div id="contact-admin-modal" class="custom-modal">
-        <div class="modal-content" style="border-color: #00ffcc;">
-            <p style="color: #00ffcc; font-weight: bold; margin-bottom: 10px;">إرسال رسالة إلى المدير:</p>
-            <textarea id="admin-msg-text" class="input-field" rows="4" placeholder="اكتب رسالتك أو استفسارك هنا..." style="margin-bottom: 15px; resize: none; text-align: right;"></textarea>
-            <button class="btn btn-primary" onclick="sendMsgToAdmin()" style="margin-bottom: 8px; padding: 10px;">إرسال الرسالة</button>
-            <button class="btn" onclick="closeContactAdminModal()" style="padding: 10px; border-color: #8b949e; color: #8b949e;">إلغاء</button>
+        <div id="aboutSection" class="content-box">
+            <h3>من نحن؟</h3>
+            <p>منصة <strong>CodifyX</strong> هي بيئة تقنية متكاملة ترتكز على العمل الإنجازي المعطاء. نقدم فرصاً مرنة ومتنوعة تشمل المعلمين البرمجيين، قيادة فرق التسويق، والخدمات البرمجية المبتكرة.</p>
+            <h3>أبرز أعمالنا:</h3>
+            <ul>
+                <li>تطوير وبناء الواجهات والحلول البرمجية.</li>
+                <li>تقديم الإرشاد والتعليم البرمجي للمبتدئين.</li>
+                <li>إدارة وتنفيذ الحملات التسويقية الفعالة.</li>
+            </ul>
+            <button class="back-btn" onclick="hideSections()">العودة للقائمة الرئيسية</button>
         </div>
     </div>
 
     <script>
-        let usersDB = JSON.parse(localStorage.getItem('codifyx_usersDB')) || [];
-        let pendingRequests = JSON.parse(localStorage.getItem('codifyx_pendingRequests')) || [];
-        let adminMessages = JSON.parse(localStorage.getItem('codifyx_adminMessages')) || [];
-        let allChannelsDB = JSON.parse(localStorage.getItem('codifyx_allChannelsDB')) || [
-            { id: 'official', name: '📢 القناة الرسمية للمشرفين', code: 'CODIFYX2026', content: 'أهلاً بك في قناة المشرفين الرسمية. التحديثات والتعليمات العامة تنشر هنا.', owner: 'المدير' }
-        ];
-        let chatDB = JSON.parse(localStorage.getItem('codifyx_chatDB')) || {};
-
-        let currentUser = JSON.parse(localStorage.getItem('codifyx_currentUser')) || null;
-        let selectedMemberForControl = null;
-        let activeChatTargetUser = null;
-
-        window.onload = function() {
-            if (currentUser) {
-                let updated = usersDB.find(u => u.tenDigits === currentUser.tenDigits);
-                if (updated) {
-                    currentUser = updated;
-                }
-                document.getElementById('user-avatar-display').src = currentUser.avatar || "https://via.placeholder.com/35";
-                
-                if (currentUser.myChannel) {
-                    document.getElementById('manage-my-channel-btn').style.display = 'block';
-                }
-                refreshUserChannelsFeed();
-                switchPage('dashboard-page');
-            } else {
-                switchPage('welcome-page');
-            }
-        };
-
-        function saveData() {
-            localStorage.setItem('codifyx_usersDB', JSON.stringify(usersDB));
-            localStorage.setItem('codifyx_pendingRequests', JSON.stringify(pendingRequests));
-            localStorage.setItem('codifyx_adminMessages', JSON.stringify(adminMessages));
-            localStorage.setItem('codifyx_allChannelsDB', JSON.stringify(allChannelsDB));
-            localStorage.setItem('codifyx_chatDB', JSON.stringify(chatDB));
-            if (currentUser) {
-                localStorage.setItem('codifyx_currentUser', JSON.stringify(currentUser));
-            } else {
-                localStorage.removeItem('codifyx_currentUser');
-            }
+        function showSection(sectionId) {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById(sectionId).style.display = 'block';
         }
 
-        function switchPage(pageId) {
-            let pages = document.querySelectorAll('.page');
-            pages.forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-        }
-
-        function openAboutModal() { document.getElementById('about-modal').style.display = 'flex'; }
-        function closeAboutModal() { document.getElementById('about-modal').style.display = 'none'; }
-        
-        function openSettingsModal() {
-            closeSideMenu();
-            document.getElementById('settings-modal').style.display = 'flex';
-            document.getElementById('new-avatar-url').value = currentUser.avatar || "";
-        }
-        function closeSettingsModal() { document.getElementById('settings-modal').style.display = 'none'; }
-
-        function updateUserAvatar() {
-            let url = document.getElementById('new-avatar-url').value.trim();
-            if (!url) { alert("الرجاء إدخال رابط صالح للصورة!"); return; }
-            currentUser.avatar = url;
-            document.getElementById('user-avatar-display').src = url;
-            
-            let userInDb = usersDB.find(u => u.tenDigits === currentUser.tenDigits);
-            if (userInDb) userInDb.avatar = url;
-
-            saveData();
-            closeSettingsModal();
-            alert("تم تحديث صورة الحساب بنجاح!");
-        }
-
-        function openFriendsModal() {
-            document.getElementById('friends-modal').style.display = 'flex';
-            renderFriendsList();
-        }
-        function closeFriendsModal() { document.getElementById('friends-modal').style.display = 'none'; }
-
-        function addFriendByTenDigits() {
-            let targetTenDigits = document.getElementById('add-friend-code').value.trim();
-            if (!targetTenDigits) { alert("الرجاء إدخال رقم 10 أرقام!"); return; }
-            if (targetTenDigits === currentUser.tenDigits) { alert("لا يمكنك إضافة نفسك كصديق!"); return; }
-
-            let foundUser = usersDB.find(u => u.tenDigits === targetTenDigits);
-            if (!foundUser) { alert("لم يتم العثور على أي مستخدم بهذا الرقم التعريفي!"); return; }
-
-            if (currentUser.friends.includes(foundUser.tenDigits)) { alert("هذا المستخدم موجود مسبقاً في قائمة أصدقائك!"); return; }
-
-            currentUser.friends.push(foundUser.tenDigits);
-            let userInDb = usersDB.find(u => u.tenDigits === currentUser.tenDigits);
-            if (userInDb) userInDb.friends = currentUser.friends;
-
-            saveData();
-            document.getElementById('add-friend-code').value = "";
-            renderFriendsList();
-            alert(`تمت إضافة العضو (${foundUser.name}) بنجاح!`);
-        }
-
-        function renderFriendsList() {
-            let container = document.getElementById('friends-list-container');
-            container.innerHTML = "";
-
-            if (!currentUser.friends || currentUser.friends.length === 0) {
-                container.innerHTML = "<p style='text-align:center; color:#8b949e; font-size:0.75rem;'>لا يوجد أصدقاء مضافون بعد.</p>";
-                return;
-            }
-
-            currentUser.friends.forEach(tenDigits => {
-                let friend = usersDB.find(u => u.tenDigits === tenDigits);
-                if (friend) {
-                    let card = document.createElement('div');
-                    card.style.cssText = "background-color: #0b0f19; padding: 6px 10px; border-radius: 6px; border: 1px solid #00ffcc; display: flex; justify-content: space-between; align-items: center;";
-                    card.innerHTML = `
-                        <span style="font-size: 0.8rem; color: #ffffff;">${friend.name} <span style="font-size: 0.65rem; color:#8b949e;">(${friend.tenDigits})</span></span>
-                        <button class="btn btn-primary" onclick="startDirectChat('${friend.tenDigits}')" style="padding: 3px 8px; font-size: 0.75rem;">محادثة</button>
-                    `;
-                    container.appendChild(card);
-                }
-            });
-        }
-
-        function handleSearchKey(event) {
-            if (event.key === 'Enter') {
-                let query = document.getElementById('global-search-input').value.trim();
-                if (!query) return;
-
-                let targetUser = usersDB.find(u => u.tenDigits === query || u.name.includes(query));
-                if (!targetUser) { alert("لم يتم العثور على أي مستخدم مطابق لعملية البحث!"); return; }
-                if (targetUser.tenDigits === currentUser.tenDigits) { alert("لا يمكنك مراسلة نفسك!"); return; }
-
-                if (!currentUser.friends.includes(targetUser.tenDigits)) {
-                    currentUser.friends.push(targetUser.tenDigits);
-                    let userInDb = usersDB.find(u => u.tenDigits === currentUser.tenDigits);
-                    if (userInDb) userInDb.friends = currentUser.friends;
-                    saveData();
-                }
-
-                startDirectChat(targetUser.tenDigits);
-                document.getElementById('global-search-input').value = "";
-            }
-        }
-
-        function startDirectChat(tenDigits) {
-            let targetUser = usersDB.find(u => u.tenDigits === tenDigits);
-            if (!targetUser) return;
-
-            activeChatTargetUser = targetUser;
-            closeFriendsModal();
-
-            document.getElementById('no-chat-container').style.display = 'none';
-            document.getElementById('active-chat-box').style.display = 'flex';
-            document.getElementById('active-chat-header').innerText = `محادثة مع: ${targetUser.name} (${targetUser.tenDigits})`;
-
-            renderActiveChatMessages();
-        }
-
-        function renderActiveChatMessages() {
-            let container = document.getElementById('active-chat-messages');
-            container.innerHTML = "";
-
-            let chatId = [currentUser.tenDigits, activeChatTargetUser.tenDigits].sort().join('_');
-            if (!chatDB[chatId]) chatDB[chatId] = [];
-
-            let messages = chatDB[chatId];
-
-            if (messages.length === 0) {
-                container.innerHTML = "<p style='text-align:center; color:#8b949e; font-size:0.75rem;'>لا توجد رسائل سابقة. ابدأ المحادثة الآن!</p>";
-                return;
-            }
-
-            messages.forEach(msg => {
-                let bubble = document.createElement('div');
-                let isMe = msg.sender === currentUser.tenDigits;
-                bubble.style.cssText = `padding: 6px 10px; border-radius: 6px; max-width: 80%; word-break: break-word; font-size: 0.8rem; text-align: right; ${isMe ? 'background-color: #00ffcc; color: #0b0f19; margin-right: auto;' : 'background-color: #30363d; color: #ffffff; margin-left: auto;'}`;
-                bubble.innerText = msg.text;
-                container.appendChild(bubble);
-            });
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function handleChatKey(event) { if (event.key === 'Enter') sendDirectMessage(); }
-
-        function sendDirectMessage() {
-            let input = document.getElementById('chat-msg-input');
-            let text = input.value.trim();
-            if (!text || !activeChatTargetUser) return;
-
-            let chatId = [currentUser.tenDigits, activeChatTargetUser.tenDigits].sort().join('_');
-            if (!chatDB[chatId]) chatDB[chatId] = [];
-
-            chatDB[chatId].push({
-                sender: currentUser.tenDigits,
-                text: text,
-                time: new Date().toLocaleTimeString()
-            });
-
-            saveData();
-            input.value = "";
-            renderActiveChatMessages();
-        }
-
-        function openCreateMyChannelModal() {
-            closeSideMenu();
-            if (currentUser.myChannel) { alert("لديك قناة مسبقاً! يمكنك إدارتها من خيار (إدارة قناتي والنشر)."); return; }
-            document.getElementById('create-my-channel-modal').style.display = 'flex';
-            document.getElementById('my-chan-name').value = "";
-            document.getElementById('my-chan-code').value = "";
-        }
-        function closeCreateMyChannelModal() { document.getElementById('create-my-channel-modal').style.display = 'none'; }
-
-        function saveMyNewChannel() {
-            let name = document.getElementById('my-chan-name').value.trim();
-            let code = document.getElementById('my-chan-code').value.trim();
-            if (!name || !code) { alert("الرجاء إدخال اسم القناة وكود الدعوة الخاص بها!"); return; }
-
-            let newChan = {
-                id: 'chan_' + Date.now(),
-                name: '📢 ' + name,
-                code: code,
-                content: 'أهلاً بك في قناتي الخاصة. هنا أشارك أحدث أعمالي!',
-                owner: currentUser.name
-            };
-
-            allChannelsDB.push(newChan);
-            currentUser.myChannel = newChan;
-            currentUser.subscribedChannels.push(newChan.code);
-
-            let userInDb = usersDB.find(u => u.tenDigits === currentUser.tenDigits);
-            if (userInDb) {
-                userInDb.myChannel = currentUser.myChannel;
-                userInDb.subscribedChannels = currentUser.subscribedChannels;
-            }
-
-            saveData();
-            closeCreateMyChannelModal();
-            document.getElementById('manage-my-channel-btn').style.display = 'block';
-            refreshUserChannelsFeed();
-            alert("تم إنشاء قناتك الخاصة بنجاح وتم الاشتراك بها تلقائياً!");
-        }
-
-        function openManageMyChannelModal() {
-            closeSideMenu();
-            if (!currentUser.myChannel) return;
-            document.getElementById('manage-chan-title-label').innerText = "إدارة: " + currentUser.myChannel.name;
-            document.getElementById('manage-chan-code-label').innerText = currentUser.myChannel.code;
-            document.getElementById('manage-chan-post-input').value = currentUser.myChannel.content;
-            document.getElementById('manage-my-channel-modal').style.display = 'flex';
-        }
-        function closeManageMyChannelModal() { document.getElementById('manage-my-channel-modal').style.display = 'none'; }
-
-        function publishMyChannelPost() {
-            let text = document.getElementById('manage-chan-post-input').value.trim();
-            if (!text) { alert("الرجاء كتابة المحتوى!"); return; }
-            
-            currentUser.myChannel.content = text;
-            let targetChan = allChannelsDB.find(c => c.code === currentUser.myChannel.code);
-            if (targetChan) targetChan.content = text;
-
-            let userInDb = usersDB.find(u => u.tenDigits === currentUser.tenDigits);
-            if (userInDb) userInDb.myChannel = currentUser.myChannel;
-
-            saveData();
-            closeManageMyChannelModal();
-            refreshUserChannelsFeed();
-            alert("تم تحديث ونشر المحتوى في قناتك الخاصة بنجاح!");
-        }
-
-        function openJoinChannelModal() {
-            closeSideMenu();
-            document.getElementById('join-channel-modal').style.display = 'flex';
-            document.getElementById('channel-invite-code').value = "";
-        }
-        function closeJoinChannelModal() { document.getElementById('join-channel-modal').style.display = 'none'; }
-
-        function joinChannelByInvite() {
-            let code = document.getElementById('channel-invite-code').value.trim();
-            if (!code) { alert("الرجاء إدخال كود الدعوة!"); return; }
-            
-            let targetChan = allChannelsDB.find(c => c.code === code);
-            if (!targetChan) { alert("كود الدعوة غير صحيح أو القناة غير موجودة!"); return; }
-
-            if (currentUser.subscribedChannels.includes(targetChan.code)) {
-                alert("أنت مشترك بالفعل في هذه القناة!");
-                closeJoinChannelModal();
-                return;
-            }
-
-            currentUser.subscribedChannels.push(targetChan.code);
-            let userInDb = usersDB.find(u => u.tenDigits === currentUser.tenDigits);
-            if (userInDb) userInDb.subscribedChannels = currentUser.subscribedChannels;
-
-            saveData();
-            refreshUserChannelsFeed();
-            closeJoinChannelModal();
-            alert(`تم الانضمام إلى قناة (${targetChan.name}) بنجاح وعرض محتواها!`);
-        }
-
-        function refreshUserChannelsFeed() {
-            let container = document.getElementById('user-channels-feed');
-            container.innerHTML = "";
-
-            if (!currentUser.subscribedChannels || currentUser.subscribedChannels.length === 0) {
-                container.style.display = 'none';
-                return;
-            }
-
-            container.style.display = 'flex';
-            currentUser.subscribedChannels.forEach(code => {
-                let chan = allChannelsDB.find(c => c.code === code);
-                if (chan) {
-                    let card = document.createElement('div');
-                    card.style.cssText = "background-color: #161b22; border: 1px solid #00ffcc; padding: 8px; border-radius: 8px; font-size: 0.8rem; text-align: right;";
-                    card.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; padding-bottom: 3px; margin-bottom: 3px;">
-                            <span style="color: #00ffcc; font-weight: bold;">${chan.name}</span>
-                            <span style="font-size: 0.65rem; color: #8b949e;">بواسطة: ${chan.owner}</span>
-                        </div>
-                        <p style="margin: 0; color: #ffffff; line-height: 1.3;">${chan.content}</p>
-                    `;
-                    container.appendChild(card);
-                }
-            });
-        }
-
-        function showAdminModal() { document.getElementById('admin-modal').style.display = 'flex'; document.getElementById('admin-password-input').value = ''; }
-        function closeAdminModal() { document.getElementById('admin-modal').style.display = 'none'; }
-
-        function verifyAdminPassword() {
-            let pass = document.getElementById('admin-password-input').value.trim();
-            if (pass === "X_445566") {
-                closeAdminModal();
-                backToAdminMenu();
-                renderRequests();
-                renderAdminMessages();
-                document.getElementById('member-control-result').style.display = 'none';
-                document.getElementById('search-member-code').value = '';
-                document.getElementById('channel-post-input').value = allChannelsDB[0].content;
-                switchPage('admin-page');
-            } else { alert("كلمة السر غير صحيحة!"); }
-        }
-
-        function openAdminSection(sectionId) {
-            document.getElementById('admin-main-menu').style.display = 'none';
-            document.getElementById('requests-section').classList.remove('active-section');
-            document.getElementById('messages-section').classList.remove('active-section');
-            document.getElementById('manage-user-section').classList.remove('active-section');
-            document.getElementById('create-channel-section').classList.remove('active-section');
-            document.getElementById(sectionId).classList.add('active-section');
-        }
-
-        function backToAdminMenu() {
-            document.getElementById('admin-main-menu').style.display = 'flex';
-            document.getElementById('requests-section').classList.remove('active-section');
-            document.getElementById('messages-section').classList.remove('active-section');
-            document.getElementById('manage-user-section').classList.remove('active-section');
-            document.getElementById('create-channel-section').classList.remove('active-section');
-        }
-
-        function submitRequest() {
-            let name = document.getElementById('reg-name').value.trim();
-            let pass = document.getElementById('reg-pass').value.trim();
-            let type = document.getElementById('reg-type').value;
-            let promoter = document.getElementById('reg-promoter').value.trim();
-
-            if (!name || !pass) { alert("الرجاء إدخال الاسم وكلمة المرور!"); return; }
-
-            let requestData = {
-                id: Date.now(),
-                name: name,
-                pass: pass,
-                type: type,
-                promoter: promoter || "لا يوجد"
-            };
-
-            pendingRequests.push(requestData);
-            saveData();
-
-            document.getElementById('reg-name').value = "";
-            document.getElementById('reg-pass').value = "";
-            document.getElementById('reg-promoter').value = "";
-            alert("تم إرسال طلبك بنجاح وسيتم مراجعته من قبل المسؤول!");
-            switchPage('options-page');
-        }
-
-        function loginWithBalance() {
-            let code = document.getElementById('login-code').value.trim();
-            let pass = document.getElementById('login-pass').value.trim();
-
-            let user = usersDB.find(u => u.code === code && u.pass === pass);
-            if (!user) { alert("الكود أو كلمة المرور غير صحيحة، أو لم يتم تفعيل حسابك بعد!"); return; }
-
-            currentUser = user;
-            if (!currentUser.avatar) currentUser.avatar = "https://via.placeholder.com/35";
-
-            saveData();
-            document.getElementById('user-avatar-display').src = currentUser.avatar;
-
-            if (currentUser.myChannel) {
-                document.getElementById('manage-my-channel-btn').style.display = 'block';
-            } else {
-                document.getElementById('manage-my-channel-btn').style.display = 'none';
-            }
-
-            activeChatTargetUser = null;
-            document.getElementById('active-chat-box').style.display = 'none';
-            document.getElementById('no-chat-container').style.display = 'flex';
-
-            refreshUserChannelsFeed();
-            document.getElementById('login-code').value = "";
-            document.getElementById('login-pass').value = "";
-            switchPage('dashboard-page');
-        }
-
-        function logoutUser() {
-            currentUser = null;
-            localStorage.removeItem('codifyx_currentUser');
-            closeSideMenu();
-            switchPage('options-page');
-        }
-
-        function renderRequests() {
-            let container = document.getElementById('requests-container');
-            container.innerHTML = "";
-
-            if (pendingRequests.length === 0) {
-                container.innerHTML = "<p style='text-align:center; color:#8b949e; font-size:0.8rem;'>لا توجد طلبات معلقة.</p>";
-                return;
-            }
-
-            pendingRequests.forEach(req => {
-                let card = document.createElement('div');
-                card.className = 'request-card';
-                card.innerHTML = `
-                    <strong>الاسم:</strong> ${req.name} <br>
-                    <input type="text" id="code-${req.id}" placeholder="الكود..." class="input-field" style="margin-bottom:4px; padding:4px; font-size:0.8rem;"><br>
-                    <input type="number" id="bal-${req.id}" placeholder="الرصيد..." class="input-field" style="margin-bottom:4px; padding:4px; font-size:0.8rem;"><br>
-                    <button class="btn btn-primary" onclick="approve(${req.id})" style="padding:4px; font-size:0.8rem;">تفعيل</button>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function approve(id) {
-            let index = pendingRequests.findIndex(r => r.id === id);
-            if (index === -1) return;
-
-            let req = pendingRequests[index];
-            let code = document.getElementById(`code-${id}`).value.trim();
-            let bal = parseInt(document.getElementById(`bal-${id}`).value);
-
-            if (!code || isNaN(bal)) { alert("الرجاء إدخال الكود والرصيد أولاً!"); return; }
-
-            let random10Digits = Math.floor(1000000000 + Math.random() * 9000000000).toString();
-
-            usersDB.push({
-                name: req.name,
-                pass: req.pass,
-                type: req.type,
-                code: code,
-                balance: bal,
-                tenDigits: random10Digits,
-                avatar: "https://via.placeholder.com/35",
-                subscribedChannels: ['CODIFYX2026'],
-                myChannel: null,
-                friends: []
-            });
-
-            pendingRequests.splice(index, 1);
-            saveData();
-            renderRequests();
-            alert(`تم تفعيل العضو ${req.name} بنجاح!\nالرقم التعريفي (10 أرقام): ${random10Digits}`);
-        }
-
-        function searchMemberByCode() {
-            let codeInput = document.getElementById('search-member-code').value.trim();
-            let member = usersDB.find(u => u.code === codeInput);
-
-            if (!member) { alert("لم يتم العثور على أي عضو بهذا الكود!"); document.getElementById('member-control-result').style.display = 'none'; return; }
-
-            selectedMemberForControl = member;
-            document.getElementById('m-name').innerText = member.name;
-            document.getElementById('m-balance').innerText = member.balance;
-            document.getElementById('m-new-balance').value = member.balance;
-            document.getElementById('member-control-result').style.display = 'block';
-        }
-
-        function updateMemberBalance() {
-            if (!selectedMemberForControl) return;
-            let newBal = parseInt(document.getElementById('m-new-balance').value);
-            if (isNaN(newBal)) { alert("الرجاء إدخال قيمة صحيحة للرصيد!"); return; }
-
-            selectedMemberForControl.balance = newBal;
-            document.getElementById('m-balance').innerText = newBal;
-            saveData();
-            alert("تم تحديث رصيد العضو بنجاح!");
-        }
-
-        function deleteMemberAccount() {
-            if (!selectedMemberForControl) return;
-            let index = usersDB.findIndex(u => u.code === selectedMemberForControl.code);
-            if (index !== -1) {
-                usersDB.splice(index, 1);
-                saveData();
-                alert("تم حذف حساب العضو نهائياً!");
-                document.getElementById('member-control-result').style.display = 'none';
-                document.getElementById('search-member-code').value = '';
-                selectedMemberForControl = null;
-            }
-        }
-
-        function publishOfficialChannel() {
-            let content = document.getElementById('channel-post-input').value.trim();
-            if (!content) { alert("الرجاء كتابة محتوى لنشره!"); return; }
-            allChannelsDB[0].content = content;
-            saveData();
-            alert("تم نشر محتوى القناة الرسمية بنجاح!");
-            backToAdminMenu();
-        }
-
-        function openSideMenu() { document.getElementById('side-menu').style.display = 'flex'; }
-        function closeSideMenu() { document.getElementById('side-menu').style.display = 'none'; }
-
-        function showBalanceInfo() { alert(`رصيدك المعتمد الحالي هو: ${currentUser.balance}`); }
-        function showAccountInfo() { alert(`معلومات الحساب:\nالاسم: ${currentUser.name}\nنوع الحساب: ${currentUser.type}\nرقم المراسلة (10 أرقام): ${currentUser.tenDigits}\nالكود الخاص بك: ${currentUser.code}`); }
-
-        function openContactAdminModal() {
-            closeSideMenu();
-            document.getElementById('contact-admin-modal').style.display = 'flex';
-            document.getElementById('admin-msg-text').value = '';
-        }
-        function closeContactAdminModal() { document.getElementById('contact-admin-modal').style.display = 'none'; }
-
-        function sendMsgToAdmin() {
-            let text = document.getElementById('admin-msg-text').value.trim();
-            if (!text) { alert("الرجاء كتابة محتوى الرسالة!"); return; }
-
-            adminMessages.push({
-                senderName: currentUser.name,
-                senderCode: currentUser.code,
-                text: text,
-                time: new Date().toLocaleTimeString()
-            });
-
-            saveData();
-            closeContactAdminModal();
-            alert("تم إرسال رسالتك إلى المدير بنجاح!");
-        }
-
-        function renderAdminMessages() {
-            let container = document.getElementById('admin-messages-container');
-            container.innerHTML = "";
-
-            if (adminMessages.length === 0) {
-                container.innerHTML = "<p style='text-align:center; color:#8b949e; font-size:0.8rem;'>لا توجد رسائل واردة.</p>";
-                return;
-            }
-
-            adminMessages.forEach((msg, index) => {
-                let card = document.createElement('div');
-                card.className = 'request-card';
-                card.style.borderColor = '#00ffcc';
-                card.innerHTML = `
-                    <span style="color: #00ffcc; font-weight: bold;">${msg.senderName}</span> (كود: ${msg.senderCode})<br>
-                    <p style="margin: 5px 0; color: #ffffff;">${msg.text}</p>
-                    <button class="btn btn-primary" onclick="deleteAdminMsg(${index})" style="padding: 3px; font-size: 0.75rem;">حذف الرسالة</button>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function deleteAdminMsg(index) {
-            adminMessages.splice(index, 1);
-            saveData();
-            renderAdminMessages();
+        function hideSections() {
+            document.getElementById('aboutSection').style.display = 'none';
+            document.getElementById('mainMenu').style.display = 'flex';
         }
     </script>
-
 </body>
 </html>
