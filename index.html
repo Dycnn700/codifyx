@@ -59,6 +59,8 @@
             transition: 0.3s;
             text-decoration: none;
             display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
         }
         .btn:hover {
             background: var(--accent-color);
@@ -80,19 +82,40 @@
             color: var(--accent-color);
             margin-top: 0;
         }
+        input[type="text"], input[type="password"] {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #334155;
+            background: #131b2e;
+            color: #fff;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+        }
+        input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
         .back-btn {
             background: #1e293b;
             color: var(--text-muted);
             border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
+            padding: 10px 20px;
+            border-radius: 8px;
             margin-top: 15px;
             cursor: pointer;
             font-size: 14px;
+            transition: 0.2s;
         }
         .back-btn:hover {
             background: #334155;
             color: #fff;
+        }
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -102,12 +125,15 @@
         <h1>CodifyX</h1>
         <p class="subtitle">منصتك المبتكرة للحلول والخدمات البرمجية والإنجازية</p>
 
+        <!-- القائمة الرئيسية -->
         <div class="btn-group" id="mainMenu">
             <button class="btn" onclick="showSection('aboutSection')">من نحن وأعمالنا</button>
+            <button class="btn" onclick="showSection('profitsSection')">استعلام عن الأرباح</button>
             <a href="mailto:Codifyx530@gmail.com?subject=استفسار أو طلب من منصة CodifyX" class="btn">تواصل معنا</a>
         </div>
 
-        <div id="aboutSection" class="content-box">
+        <!-- قسم من نحن -->
+        <div id="aboutSection" class="content-box" style="text-align: right;">
             <h3>من نحن؟</h3>
             <p>منصة <strong>CodifyX</strong> هي بيئة تقنية متكاملة ترتكز على العمل الإنجازي المعطاء. نقدم فرصاً مرنة ومتنوعة تشمل المعلمين البرمجيين، قيادة فرق التسويق، والخدمات البرمجية المبتكرة.</p>
             <h3>أبرز أعمالنا:</h3>
@@ -116,19 +142,67 @@
                 <li>تقديم الإرشاد والتعليم البرمجي للمبتدئين.</li>
                 <li>إدارة وتنفيذ الحملات التسويقية الفعالة.</li>
             </ul>
+            <div style="text-align: center;">
+                <button class="back-btn" onclick="hideSections()">العودة للقائمة الرئيسية</button>
+            </div>
+        </div>
+
+        <!-- قسم استعلام الأرباح -->
+        <div id="profitsSection" class="content-box" style="text-align: center;">
+            <h3>استعلام عن الأرباح</h3>
+            <input type="text" id="code" placeholder="أدخل الكود الخاص بك"><br>
+            <input type="password" id="pin" placeholder="أدخل الرمز السري"><br>
+            <button class="btn" style="width: 95%; margin-top: 10px; padding: 10px;" onclick="checkBalance()">عرض رصيدي</button>
+            <div id="result"></div>
             <button class="back-btn" onclick="hideSections()">العودة للقائمة الرئيسية</button>
         </div>
     </div>
 
     <script>
+        // === قاعدة البيانات اليدوية ===
+        // يمكنك هنا تعديل الأكواد (id)، الرموز (pin)، الأسماء (name)، والأموال (balance) بكل سهولة
+        const teamData = [
+            { id: "101", pin: "1234", name: "أحمد", balance: "$150" },
+            { id: "102", pin: "5678", name: "محمد", balance: "$320" },
+            { id: "103", pin: "9988", name: "علي", balance: "$90" }
+            // لإضافة شخص جديد، فقط انسخ سطر وضع قبله فاصلة (,) هكذا:
+            // , { id: "104", pin: "0000", name: "اسم العضو", balance: "$200" }
+        ];
+
         function showSection(sectionId) {
             document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('aboutSection').style.display = 'none';
+            document.getElementById('profitsSection').style.display = 'none';
             document.getElementById(sectionId).style.display = 'block';
         }
 
         function hideSections() {
             document.getElementById('aboutSection').style.display = 'none';
+            document.getElementById('profitsSection').style.display = 'none';
             document.getElementById('mainMenu').style.display = 'flex';
+        }
+
+        function checkBalance() {
+            const inputCode = document.getElementById('code').value.trim();
+            const inputPin = document.getElementById('pin').value.trim();
+            const resultDiv = document.getElementById('result');
+
+            if (!inputCode || !inputPin) {
+                resultDiv.style.color = "#ff5555";
+                resultDiv.innerText = "الرجاء إدخال الكود والرمز السري!";
+                return;
+            }
+
+            // البحث عن العضو في القائمة اليدوية
+            const member = teamData.find(m => m.id === inputCode && m.pin === inputPin);
+
+            if (member) {
+                resultDiv.style.color = "#00ffcc";
+                resultDiv.innerHTML = `مرحباً، ${member.name}<br>رصيدك الحالي: <span style="color: #ffffff;">${member.balance}</span>`;
+            } else {
+                resultDiv.style.color = "#ff5555";
+                resultDiv.innerText = "الكود أو الرمز السري غير صحيح!";
+            }
         }
     </script>
 </body>
